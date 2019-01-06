@@ -1,0 +1,12 @@
+{
+  "name": "liulielectron",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "node_modules/.bin/electron .",
+    "start": "node_modules/.bin/electron ."
+  },
+  "devDependencies": {
+    "electron": "^4.0.1"
+  }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>LiuliReader</title>
+  <link rel="stylesheet" href="style/index.css">
+</head>
+<body>
+  <div id="app">
+    <div class="article-list-wrap">
+      <nav class="article-list-nav">
+        <ul class="article-list">
+          <li class="article-list-item button" @click="item_click" v-for="article of articles">{{article.title}}</li>
+          <li class="article-list-item button" @click="load_more">More...</li>
+        </ul>
+      </nav>
+    </div>
+    <div class="article-detail-wrap">
+      <div class="article-title-wrap">
+        <div class="article-title">{{title}}</div>
+        <img src="resources/go.svg" class="article-open button" @click="open_article">
+      </div>
+      <img :src="img">
+      <div class="article-description">{{description}}</div>
+    </div>
+    <div class="article-browser" v-if="iframe_src" @click="back_to_list">
+      <div class="frame_wrap">
+        <iframe :src="iframe_src" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+  <script src="lib/vue.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
