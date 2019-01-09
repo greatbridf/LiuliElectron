@@ -61,4 +61,8 @@ var doc_app = new Vue({
   }
 });
 
-doc_app.load_more();
+ipc.once("debugStatusReply", (_, resp) => {
+  if (resp === false)
+    doc_app.load_more();
+});
+ipc.send("getDebugStatus");

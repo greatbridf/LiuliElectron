@@ -3,6 +3,10 @@ const {app, BrowserWindow} = require('electron');
 const ipc = require('electron').ipcMain;
 const request = require('request');
 
+var debug = false;
+if (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
+  debug = true;
+
 let window;
 
 function createWindow() {
@@ -20,4 +24,8 @@ ipc.on("articlesQuery", (event, req) => {
     console.log(body);
     event.sender.send("articlesReply", JSON.parse(body));
   });
+})
+
+ipc.on("getDebugStatus", (event, _) => {
+  event.sender.send("debugStatusReply", debug);
 })
