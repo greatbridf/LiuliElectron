@@ -4,3 +4,7 @@ node_modules/
 .DS_Store
 # VSCode configuration
 .vscode/
+# Run script
+run.command
+start.sh
+run.sh
