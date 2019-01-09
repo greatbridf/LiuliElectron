@@ -51,10 +51,10 @@ html, body, #app, .article-detail-wrap, .article-list-wrap, .article-list-nav {
   overflow: hidden;
   display: inline-block;
   height: 100%;
-  width: 90%;
+  width: auto;
 }
 
-.article-open {
+.article-action {
   display: block;
   margin: 0;
   padding: 1% 0 1%;

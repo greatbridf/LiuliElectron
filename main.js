@@ -1,5 +1,5 @@
 'use strict';
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, clipboard} = require('electron');
 const ipc = require('electron').ipcMain;
 const request = require('request');
 
@@ -26,6 +26,15 @@ ipc.on("articlesQuery", (event, req) => {
   });
 })
 
-ipc.on("getDebugStatus", (event, _) => {
+ipc.on("magnetQuery", (event, articleID) => {
+  request(`http://144.202.106.87/interface/LiuliGo.cgi?req=magnet&id=${articleID}`, (err, _, body) => {
+    if (err)
+      throw "Error getting magnet link";
+    clipboard.writeText(body.split('\n')[0]);
+    event.sender.send("magnetReply", "Succeeded");
+  })
+})
+
+ipc.on("debugStatusQuery", (event, _) => {
   event.sender.send("debugStatusReply", debug);
 })

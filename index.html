@@ -20,7 +20,8 @@
     <div class="article-detail-wrap">
       <div class="article-title-wrap">
         <div class="article-title">{{title}}</div>
-        <img src="resources/go.svg" class="article-open button" @click="open_article">
+        <img src="resources/go.svg" class="article-action button" @click="open_article">
+        <img src="resources/link.svg" class="article-action button" @click="get_magnet">
       </div>
       <img :src="img">
       <div class="article-description">{{description}}</div>

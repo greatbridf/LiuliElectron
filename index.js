@@ -57,6 +57,12 @@ var doc_app = new Vue({
         doc_app.load_data(resp);
       });
       ipc.send("articlesQuery", doc_app.page++);
+    },
+    get_magnet: _ => {
+      ipc.once("magnetReply", (_, resp) => {
+        console.log(resp);
+      });
+      ipc.send("magnetQuery", getArticleID(doc_app.link));
     }
   }
 });
@@ -65,4 +71,4 @@ ipc.once("debugStatusReply", (_, resp) => {
   if (resp === false)
     doc_app.load_more();
 });
-ipc.send("getDebugStatus");
+ipc.send("debugStatusQuery");
