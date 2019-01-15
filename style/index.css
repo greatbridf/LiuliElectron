@@ -52,6 +52,7 @@ html, body, #app, .article-detail-wrap, .article-list-wrap, .article-list-nav {
   display: inline-block;
   height: 100%;
   width: auto;
+  max-width: 80%;
 }
 
 .article-action {
@@ -64,7 +65,7 @@ html, body, #app, .article-detail-wrap, .article-list-wrap, .article-list-nav {
 }
 
 .article-description {
-  height: 15%;
+  height: 14%;
   overflow: scroll;
 }
 
