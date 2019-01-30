@@ -8,3 +8,5 @@ node_modules/
 run.command
 start.sh
 run.sh
+# Distibution
+dist/

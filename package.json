@@ -2,11 +2,24 @@
   "name": "liulielectron",
   "version": "1.0.0",
   "main": "main.js",
+  "build": {
+    "appId": "com.greatbridf.LiuliElectron",
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    }
+  },
   "scripts": {
-    "test": "node_modules/.bin/electron .",
-    "start": "node_modules/.bin/electron ."
+    "test": "electron .",
+    "start": "electron .",
+    "dist": "electron-builder --mac"
   },
   "devDependencies": {
-    "electron": "^4.0.1"
+    "electron": "^4.0.1",
+    "electron-builder": "^20.38.5"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
   }
 }
