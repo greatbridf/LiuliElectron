@@ -6,7 +6,8 @@
     "appId": "com.greatbridf.LiuliElectron",
     "mac": {
       "target": [
-        "dmg"
+        "zip",
+        "tar.gz"
       ]
     }
   },
