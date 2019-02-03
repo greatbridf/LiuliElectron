@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "test": "electron .",
+    "test": "electron . --debug",
     "start": "electron .",
     "dist": "electron-builder --mac"
   },
