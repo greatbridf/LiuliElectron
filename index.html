@@ -23,12 +23,26 @@
         <img src="resources/go.svg" class="article-action button" @click="open_article">
         <img src="resources/link.svg" class="article-action button" @click="get_magnet">
       </div>
-      <img :src="img">
+      <img :src="img" class="article-image">
       <div class="article-description">{{description}}</div>
     </div>
     <div class="article-browser" v-if="iframe_src" @click="back_to_list">
       <div class="frame_wrap">
         <iframe :src="iframe_src" frameborder="0"></iframe>
+      </div>
+    </div>
+    <div id="information_wrap">
+      <div class="success" style="display:none;">
+        <img src="resources/success.svg" class="success-image">
+        Succeeded
+      </div>
+      <div class="magnet-selector-wrap" @click="back_to_content" v-if="magnet_links">
+        <ul class="magnet-selector">
+          <li class="magnet-link button" v-for="magnet of magnet_links" @click="copy_to_clipboard">
+            <img src="resources/link.svg">
+            {{magnet}}
+          </li>
+        </ul>
       </div>
     </div>
   </div>

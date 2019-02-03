@@ -87,7 +87,7 @@ html, body, #app, .article-detail-wrap, .article-list-wrap, .article-list-nav {
   background: rgba(255, 255, 255, 0.4);
 }
 
-img {
+.article-image {
   width: 100%;
   max-height: 75%;
 }
@@ -106,6 +106,47 @@ img {
   z-index: 51;
   padding: 0 10% 0 10%;
   height: 100%;
+}
+
+.success {
+  position: absolute;
+  margin: auto;
+  background: #0002;
+  top: 40%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  border-radius: 10px;
+  padding-bottom: 5px;
+}
+
+.success-image {
+  width: 75%;
+  height: 75%;
+  padding: 5px 5px 0 5px;
+}
+
+.magnet-selector-wrap {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #0004;
+}
+
+.magnet-selector {
+  list-style: none;
+  background: lightgrey;
+  padding: 0;
+  width: 70%;
+  margin: auto;
+}
+
+.magnet-link {
+  font-size: 24px;
 }
 
 iframe {

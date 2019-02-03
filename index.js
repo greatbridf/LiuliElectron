@@ -1,5 +1,6 @@
 'use strict';
 const ipc = require("electron").ipcRenderer;
+const jQuery = require("./lib/jquery.min.js");
 
 function getArticleID(link) {
   let regexp = /wp\/([0-9]*)\.html/;
@@ -10,6 +11,12 @@ function getArticleLink(link) {
   return `http://144.202.106.87/interface/LiuliGo.cgi?req=content&id=${getArticleID(link)}`;
 }
 
+function showSuccess() {
+  var SUCCESS = jQuery(".success");
+  SUCCESS.fadeIn();
+  setInterval(()=>SUCCESS.fadeOut(), 2000);
+}
+
 var doc_app = new Vue({
   el: "#app",
   data: {
@@ -18,6 +25,7 @@ var doc_app = new Vue({
     description: "Loading...",
     img: "",
     link: "",
+    magnet_links: null,
     iframe_src: null,
     page: 1
   },
@@ -52,6 +60,9 @@ var doc_app = new Vue({
     back_to_list: _ => {
       doc_app.iframe_src = null;
     },
+    back_to_content: _ => {
+      doc_app.magnet_links = null;
+    },
     load_more: _ => {
       ipc.once("articlesReply", (_, resp) => {
         doc_app.load_data(resp);
@@ -60,9 +71,19 @@ var doc_app = new Vue({
     },
     get_magnet: _ => {
       ipc.once("magnetReply", (_, resp) => {
-        console.log(resp);
+        if (resp.substring(0, 5).toUpperCase() === "ERROR") {
+          // TODO: Show a 'failed' popup
+          return;
+        }
+        var tmp = resp.split('\n');
+        tmp.pop();
+        doc_app.magnet_links = tmp;
       });
       ipc.send("magnetQuery", getArticleID(doc_app.link));
+    },
+    copy_to_clipboard: event => {
+      ipc.send("setClipboard", event.target.innerText);
+      showSuccess();
     }
   }
 });

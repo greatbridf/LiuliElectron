@@ -30,10 +30,13 @@ ipc.on("magnetQuery", (event, articleID) => {
   request(`http://144.202.106.87/interface/LiuliGo.cgi?req=magnet&id=${articleID}`, (err, _, body) => {
     if (err)
       throw "Error getting magnet link";
-    clipboard.writeText(body.split('\n')[0]);
-    event.sender.send("magnetReply", "Succeeded");
+    event.sender.send("magnetReply", body);
   })
 })
+
+ipc.on("setClipboard", (_, content) => {
+  clipboard.writeText(content);
+});
 
 ipc.on("debugStatusQuery", (event, _) => {
   event.sender.send("debugStatusReply", debug);
