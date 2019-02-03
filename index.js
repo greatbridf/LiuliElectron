@@ -12,9 +12,17 @@ function getArticleLink(link) {
 }
 
 function showSuccess() {
-  var SUCCESS = jQuery(".success");
+  if (!window.SUCCESS)
+    window.SUCCESS = jQuery(".success");
   SUCCESS.fadeIn();
   setInterval(()=>SUCCESS.fadeOut(), 2000);
+}
+
+function showFailure() {
+  if (!window.FAILURE)
+    window.FAILURE = jQuery(".failure");
+  FAILURE.fadeIn();
+  setInterval(()=>FAILURE.fadeOut(), 2000);
 }
 
 var doc_app = new Vue({
@@ -72,7 +80,7 @@ var doc_app = new Vue({
     get_magnet: _ => {
       ipc.once("magnetReply", (_, resp) => {
         if (resp.substring(0, 5).toUpperCase() === "ERROR") {
-          // TODO: Show a 'failed' popup
+          showFailure();
           return;
         }
         var tmp = resp.split('\n');

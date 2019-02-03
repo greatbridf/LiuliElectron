@@ -36,6 +36,10 @@
         <img src="resources/success.svg" class="success-image">
         Succeeded
       </div>
+      <div class="failure" style="display:none;">
+        <img src="resources/failure.svg" class="failure-image">
+        Failed
+      </div>
       <div class="magnet-selector-wrap" @click="back_to_content" v-if="magnet_links">
         <ul class="magnet-selector">
           <li class="magnet-link button" v-for="magnet of magnet_links" @click="copy_to_clipboard">

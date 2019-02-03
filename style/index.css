@@ -108,10 +108,10 @@ html, body, #app, .article-detail-wrap, .article-list-wrap, .article-list-nav {
   height: 100%;
 }
 
-.success {
+.success, .failure {
   position: absolute;
   margin: auto;
-  background: #0002;
+  background: #fffc;
   top: 40%;
   left: 50%;
   width: 100px;
@@ -121,7 +121,7 @@ html, body, #app, .article-detail-wrap, .article-list-wrap, .article-list-nav {
   padding-bottom: 5px;
 }
 
-.success-image {
+.success-image, .failure-image {
   width: 75%;
   height: 75%;
   padding: 5px 5px 0 5px;
