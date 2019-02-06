@@ -1,12 +1,16 @@
 {
   "name": "Hacg.me",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "main.js",
   "build": {
     "appId": "com.greatbridf.LiuliElectron",
     "mac": {
-      "target": ["zip"],
-      "publish": ["github"]
+      "target": [
+        "zip"
+      ],
+      "publish": [
+        "github"
+      ]
     }
   },
   "scripts": {
