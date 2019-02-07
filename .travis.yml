@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - "8"
+
+install:
+  - npm install
+
+script:
+  - npm run dist
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  file: "dist/*.zip"
+  file_glob: true
+  api_key: "$GH_TOKEN"
+  on:
+    tags: true
+    branch: master
