@@ -6,32 +6,53 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>LiuliReader</title>
   <link rel="stylesheet" href="style/index.css">
+  <link rel="stylesheet" href="style/bootstrap.min.css">
+  <script>
+    window.$ = window.jQuery = require("./lib/jquery.min.js")
+  </script>
+  <script src="lib/popper.min.js"></script>
+  <script src="lib/bootstrap.min.js"></script>
 </head>
 <body>
-  <div id="app">
-    <div class="article-list-wrap">
-      <nav class="article-list-nav">
-        <ul class="article-list">
-          <li class="article-list-item button" @click="item_click" v-for="article of articles">{{article.title}}</li>
-          <li class="article-list-item button" @click="load_more">More...</li>
-        </ul>
-      </nav>
+<div id="app" class="container-fluid">
+  <div class="row">
+    <!-- Main nav bar -->
+    <div class="col-sm-4 hacg-block">
+      <ul class="list-group">
+        <li class="list-group-item button" @click="item_click" v-for="article of articles">{{article.title}}</li>
+        <li class="list-group-item button" @click="load_more">More...</li>
+      </ul>
     </div>
-    <div class="article-detail-wrap">
-      <div class="article-title-wrap">
-        <div class="article-title">{{title}}</div>
-        <img src="resources/go.svg" class="article-action button" @click="open_article">
-        <img src="resources/link.svg" class="article-action button" @click="get_magnet">
+    <!-- End -->
+
+    <!-- Article area -->
+    <div class="col-sm-8 hacg-block">
+      <div class="card">
+        <img :src="img" class="card-img-top">
+        <div class="card-body">
+          <h4 class="card-title">{{title}}</h4>
+          <p class="card-text">{{description}}</p>
+          <button :disabled="action_disabled" class="btn btn-info" data-toggle="modal" data-target="#magnet" @click="get_magnet">获取磁力链接</button>
+          <button :disabled="action_disabled" class="btn btn-primary right" data-toggle="modal" data-target="#article">进入文章页面</button>
+        </div>
       </div>
-      <img :src="img" class="article-image">
-      <div class="article-description">{{description}}</div>
     </div>
-    <div class="article-browser" v-if="iframe_src" @click="back_to_list">
-      <div class="frame_wrap">
-        <iframe :src="iframe_src" frameborder="0"></iframe>
+    <!-- End -->
+
+    <!-- Article explorer -->
+    <div class="modal fade" id="article">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-body">
+            <iframe :src="iframe_src" frameborder="0"></iframe>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- End -->
+
     <div id="information_wrap">
+      <!-- Success and failure icon -->
       <div class="success" style="display:none;">
         <img src="resources/success.svg" class="success-image">
         Succeeded
@@ -40,17 +61,34 @@
         <img src="resources/failure.svg" class="failure-image">
         Failed
       </div>
-      <div class="magnet-selector-wrap" @click="back_to_content" v-if="magnet_links">
-        <ul class="magnet-selector">
-          <li class="magnet-link button" v-for="magnet of magnet_links" @click="copy_to_clipboard">
-            <img src="resources/link.svg">
-            {{magnet}}
-          </li>
-        </ul>
+      <!-- End -->
+
+      <!-- Magnet link selector -->
+      <div class="modal fade" id="magnet">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">选择磁力链接...</h4>
+              <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="list-group">
+                <a href="javascript:;" data-dismiss="modal" @click="copy_to_clipboard" class="list-group-item" v-for="magnet of magnet_links">{{magnet}}</a>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <span class="text-muted small" v-if="getting_magnet_link">正在获取中</span>
+              <span class="text-muted small" v-if="magnet_link_error">获取磁力链接失败</span>
+              <button class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- End -->
     </div>
   </div>
-  <script src="lib/vue.min.js"></script>
-  <script src="index.js"></script>
+</div>
+<script src="lib/vue.min.js"></script>
+<script src="index.js"></script>
 </body>
 </html>

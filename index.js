@@ -1,6 +1,5 @@
 'use strict';
 const ipc = require("electron").ipcRenderer;
-const jQuery = require("./lib/jquery.min.js");
 
 function getArticleID(link) {
   let regexp = /wp\/([0-9]*)\.html/;
@@ -35,17 +34,25 @@ var doc_app = new Vue({
     link: "",
     magnet_links: null,
     iframe_src: null,
-    page: 1
+    page: 1,
+    action_disabled: true,
+    getting_magnet_link: true,
+    magnet_link_error: false
   },
   methods: {
     update_data: i => {
       let article = doc_app.articles[i];
       for (let key in article)
         doc_app[key] = article[key];
-      let on = document.querySelector('.article-list-item-on');
+      let on = document.querySelector('.active');
       if (on)
-        on.classList.remove('article-list-item-on');
-      document.querySelectorAll('.article-list-item')[i].classList.add('article-list-item-on');
+        on.classList.remove('active');
+      document.querySelectorAll('.list-group-item')[i].classList.add('active');
+      doc_app.action_disabled = false;
+      doc_app.getting_magnet_link = true;
+      doc_app.magnet_links = null;
+      doc_app.magnet_link_error = false
+      doc_app.iframe_src = getArticleLink(doc_app.link);
     },
     load_data: data => {
       let me = doc_app;
@@ -57,19 +64,11 @@ var doc_app = new Vue({
     },
     item_click: event => {
       let text = event.target.innerText;
+      if (text === "Loading...") return;
       doc_app.articles.forEach((elem, index) => {
         if (text === elem.title)
           doc_app.update_data(index);
       });
-    },
-    open_article: event => {
-      doc_app.iframe_src = getArticleLink(doc_app.link);
-    },
-    back_to_list: _ => {
-      doc_app.iframe_src = null;
-    },
-    back_to_content: _ => {
-      doc_app.magnet_links = null;
     },
     load_more: _ => {
       ipc.once("articlesReply", (_, resp) => {
@@ -78,14 +77,18 @@ var doc_app = new Vue({
       ipc.send("articlesQuery", doc_app.page++);
     },
     get_magnet: _ => {
+      if (doc_app.magnet_links) return;
       ipc.once("magnetReply", (_, resp) => {
-        if (resp.substring(0, 5).toUpperCase() === "ERROR") {
+        if (resp.substring(0, 6) !== "magnet") {
           showFailure();
+          doc_app.getting_magnet_link = false;
+          doc_app.magnet_link_error = true;
           return;
         }
         var tmp = resp.split('\n');
         tmp.pop();
         doc_app.magnet_links = tmp;
+        doc_app.getting_magnet_link = false;
       });
       ipc.send("magnetQuery", getArticleID(doc_app.link));
     },
