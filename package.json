@@ -1,6 +1,6 @@
 {
   "name": "Hacg.me",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "main": "main.js",
   "build": {
     "appId": "com.greatbridf.LiuliElectron",
