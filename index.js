@@ -1,5 +1,6 @@
 'use strict';
 const ipc = require("electron").ipcRenderer;
+const cdn_addr = "207.148.126.92";
 
 function getArticleID(link) {
   let regexp = /wp\/([0-9]*)\.html/;
@@ -7,7 +8,7 @@ function getArticleID(link) {
 }
 
 function getArticleLink(link) {
-  return `http://144.202.106.87/interface/LiuliGo.cgi?req=content&id=${getArticleID(link)}`;
+  return `http://${cdn_addr}/interface/LiuliGo.cgi?req=content&id=${getArticleID(link)}`;
 }
 
 function showSuccess() {
