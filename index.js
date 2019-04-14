@@ -1,6 +1,6 @@
 'use strict';
 const ipc = require("electron").ipcRenderer;
-const cdn_addr = "207.148.126.92";
+var cdn_addr = "";
 
 function getArticleID(link) {
   let regexp = /wp\/([0-9]*)\.html/;
@@ -8,7 +8,7 @@ function getArticleID(link) {
 }
 
 function getArticleLink(link) {
-  return `http://${cdn_addr}/interface/LiuliGo.cgi?req=content&id=${getArticleID(link)}`;
+  return `${cdn_addr}/interface/LiuliGo.cgi?req=content&id=${getArticleID(link)}`;
 }
 
 function showSuccess() {
@@ -104,4 +104,8 @@ ipc.once("debugStatusReply", (_, resp) => {
   if (resp === false)
     doc_app.load_more();
 });
-ipc.send("debugStatusQuery");
+ipc.once("cdnAddressReply", (_, resp) => {
+  cdn_addr = resp;
+  ipc.send("debugStatusQuery");
+});
+ipc.send("cdnAddressQuery");

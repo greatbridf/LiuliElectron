@@ -2,7 +2,7 @@
 const {app, BrowserWindow, clipboard, Menu} = require('electron');
 const ipc = require('electron').ipcMain;
 const request = require('request');
-const cdn_addr = "207.148.126.92";
+const cdn_addr = "https://greatbridf.top";
 
 var debug = false;
 if (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
@@ -95,7 +95,7 @@ app.on('window-all-closed', ()=> {
 
 // Register IPC listeners
 ipc.on("articlesQuery", (event, req) => {
-  request(`http://${cdn_addr}/interface/LiuliGo.cgi?req=articles&page=${req}`, (err, _, body) => {
+  request(`${cdn_addr}/interface/LiuliGo.cgi?req=articles&page=${req}`, (err, _, body) => {
     if (err)
       throw "Error getting articles";
     console.log(body);
@@ -104,7 +104,7 @@ ipc.on("articlesQuery", (event, req) => {
 })
 
 ipc.on("magnetQuery", (event, articleID) => {
-  request(`http://${cdn_addr}/interface/LiuliGo.cgi?req=magnet&id=${articleID}`, (err, _, body) => {
+  request(`${cdn_addr}/interface/LiuliGo.cgi?req=magnet&id=${articleID}`, (err, _, body) => {
     if (err)
       throw "Error getting magnet link";
     event.sender.send("magnetReply", body);
@@ -117,4 +117,7 @@ ipc.on("setClipboard", (_, content) => {
 
 ipc.on("debugStatusQuery", (event, _) => {
   event.sender.send("debugStatusReply", debug);
-})
+});
+ipc.on("cdnAddressQuery", (event, _) => {
+  event.sender.send("cdnAddressReply", cdn_addr);
+});
