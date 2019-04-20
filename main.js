@@ -3,6 +3,7 @@ const {app, BrowserWindow, clipboard, Menu} = require('electron');
 const ipc = require('electron').ipcMain;
 const request = require('request');
 const cdn_addr = "https://greatbridf.top";
+const os = require('os');
 
 var debug = false;
 if (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
@@ -81,11 +82,14 @@ const template = [
   }
 ]
 const menu = Menu.buildFromTemplate(template)
-Menu.setApplicationMenu(menu)
+if (process.platform !== "win32")
+  Menu.setApplicationMenu(menu)
 
 function createWindow() {
   window = new BrowserWindow({width: 1280, height: 720});
   window.loadFile('index.html');
+  if (process.platform === "win32")
+    Menu.setApplicationMenu(null);
 }
 
 app.on('ready', createWindow);
