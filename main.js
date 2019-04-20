@@ -125,3 +125,6 @@ ipc.on("debugStatusQuery", (event, _) => {
 ipc.on("cdnAddressQuery", (event, _) => {
   event.sender.send("cdnAddressReply", cdn_addr);
 });
+ipc.on("platformQuery", (event, _) => {
+  event.sender.send("platformReply", process.platform);
+});
