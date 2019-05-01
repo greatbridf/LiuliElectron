@@ -24,7 +24,7 @@
   "scripts": {
     "test": "electron . --debug",
     "start": "electron .",
-    "dist": "electron-builder --win --x64 --mac -mwl"
+    "dist": "electron-builder -mwl"
   },
   "devDependencies": {
     "electron": "^4.0.1",
