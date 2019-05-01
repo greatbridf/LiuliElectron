@@ -24,8 +24,7 @@
   "scripts": {
     "test": "electron . --debug",
     "start": "electron .",
-    "dist": "electron-builder --win --x64 --mac",
-    "release": "electron-builder --win --x64 --mac"
+    "dist": "electron-builder --win --x64 --mac -mwl"
   },
   "devDependencies": {
     "electron": "^4.0.1",
