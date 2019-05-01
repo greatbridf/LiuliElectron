@@ -11,13 +11,21 @@
       "publish": [
         "github"
       ]
+    },
+    "win": {
+      "target": [
+        "zip"
+      ],
+      "publish": [
+        "github"
+      ]
     }
   },
   "scripts": {
     "test": "electron . --debug",
     "start": "electron .",
-    "dist": "electron-builder --mac",
-    "release": "electron-builder --mac"
+    "dist": "electron-builder --win --mac",
+    "release": "electron-builder --win --mac"
   },
   "devDependencies": {
     "electron": "^4.0.1",
