@@ -108,14 +108,4 @@ ipc.once("cdnAddressReply", (_, resp) => {
   cdn_addr = resp;
   ipc.send("debugStatusQuery");
 });
-ipc.once("platformReply", (_, resp) => {
-  if (resp === "win32") {
-    var elem = document.createElement("link");
-    elem.rel = "stylesheet";
-    elem.type = "text/css";
-    elem.href = "style/windows.css";
-    document.head.appendChild(elem);
-  }
-});
-ipc.send("platformQuery");
 ipc.send("cdnAddressQuery");

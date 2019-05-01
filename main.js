@@ -87,9 +87,12 @@ if (process.platform !== "win32")
 
 function createWindow() {
   window = new BrowserWindow({width: 1280, height: 720});
-  window.loadFile('index.html');
-  if (process.platform === "win32")
+  if (process.platform === "win32") {
     Menu.setApplicationMenu(null);
+    window.loadFile('index_win.html');
+  } else {
+    window.loadFile('index.html');
+  }
 }
 
 app.on('ready', createWindow);
@@ -124,7 +127,4 @@ ipc.on("debugStatusQuery", (event, _) => {
 });
 ipc.on("cdnAddressQuery", (event, _) => {
   event.sender.send("cdnAddressReply", cdn_addr);
-});
-ipc.on("platformQuery", (event, _) => {
-  event.sender.send("platformReply", process.platform);
 });
