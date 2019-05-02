@@ -105,8 +105,13 @@ ipc.on("articlesQuery", (event, req) => {
   request(`${cdn_addr}/interface/LiuliGo.cgi?req=articles&page=${req}`, (err, _, body) => {
     if (err)
       throw "Error getting articles";
-    console.log(body);
-    event.sender.send("articlesReply", JSON.parse(body));
+    body = JSON.parse(body)
+    if (body.code !== 200) {
+      console.log(`[ERROR] ${body.code} ${body.msg}`)
+      throw body.msg ? body.msg : "Unexpected error"
+    }
+    console.log(`[INFO] ${body.code} ${body.msg}`)
+    event.sender.send("articlesReply", body.data);
   });
 })
 
