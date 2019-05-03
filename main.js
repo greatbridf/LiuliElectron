@@ -119,6 +119,8 @@ ipc.on("magnetQuery", (event, articleID) => {
   request(`${cdn_addr}/interface/LiuliGo.cgi?req=magnet&id=${articleID}`, (err, _, body) => {
     if (err)
       throw "Error getting magnet link";
+    body = JSON.parse(body)
+    console.log(`[INFO] ${body.code} ${body.msg}`)
     event.sender.send("magnetReply", body);
   })
 })

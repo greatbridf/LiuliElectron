@@ -80,15 +80,13 @@ var doc_app = new Vue({
     get_magnet: _ => {
       if (doc_app.magnet_links) return;
       ipc.once("magnetReply", (_, resp) => {
-        if (resp.substring(0, 6) !== "magnet") {
+        if (resp.code !== 200) {
           showFailure();
           doc_app.getting_magnet_link = false;
           doc_app.magnet_link_error = true;
           return;
         }
-        var tmp = resp.split('\n');
-        tmp.pop();
-        doc_app.magnet_links = tmp;
+        doc_app.magnet_links = resp.data.magnets;
         doc_app.getting_magnet_link = false;
       });
       ipc.send("magnetQuery", getArticleID(doc_app.link));
