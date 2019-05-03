@@ -80,15 +80,13 @@ var doc_app = new Vue({
     get_magnet: _ => {
       if (doc_app.magnet_links) return;
       ipc.once("magnetReply", (_, resp) => {
-        if (resp.substring(0, 6) !== "magnet") {
+        if (resp.code !== 200) {
           showFailure();
           doc_app.getting_magnet_link = false;
           doc_app.magnet_link_error = true;
           return;
         }
-        var tmp = resp.split('\n');
-        tmp.pop();
-        doc_app.magnet_links = tmp;
+        doc_app.magnet_links = resp.data.magnets;
         doc_app.getting_magnet_link = false;
       });
       ipc.send("magnetQuery", getArticleID(doc_app.link));
@@ -108,14 +106,4 @@ ipc.once("cdnAddressReply", (_, resp) => {
   cdn_addr = resp;
   ipc.send("debugStatusQuery");
 });
-ipc.once("platformReply", (_, resp) => {
-  if (resp === "win32") {
-    var elem = document.createElement("link");
-    elem.rel = "stylesheet";
-    elem.type = "text/css";
-    elem.href = "style/windows.css";
-    document.head.appendChild(elem);
-  }
-});
-ipc.send("platformQuery");
 ipc.send("cdnAddressQuery");

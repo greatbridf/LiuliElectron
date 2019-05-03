@@ -87,9 +87,12 @@ if (process.platform !== "win32")
 
 function createWindow() {
   window = new BrowserWindow({width: 1280, height: 720});
-  window.loadFile('index.html');
-  if (process.platform === "win32")
+  if (process.platform === "win32") {
     Menu.setApplicationMenu(null);
+    window.loadFile('index_win.html');
+  } else {
+    window.loadFile('index.html');
+  }
 }
 
 app.on('ready', createWindow);
@@ -102,8 +105,13 @@ ipc.on("articlesQuery", (event, req) => {
   request(`${cdn_addr}/interface/LiuliGo.cgi?req=articles&page=${req}`, (err, _, body) => {
     if (err)
       throw "Error getting articles";
-    console.log(body);
-    event.sender.send("articlesReply", JSON.parse(body));
+    body = JSON.parse(body)
+    if (body.code !== 200) {
+      console.log(`[ERROR] ${body.code} ${body.msg}`)
+      throw body.msg ? body.msg : "Unexpected error"
+    }
+    console.log(`[INFO] ${body.code} ${body.msg}`)
+    event.sender.send("articlesReply", body.data);
   });
 })
 
@@ -111,6 +119,8 @@ ipc.on("magnetQuery", (event, articleID) => {
   request(`${cdn_addr}/interface/LiuliGo.cgi?req=magnet&id=${articleID}`, (err, _, body) => {
     if (err)
       throw "Error getting magnet link";
+    body = JSON.parse(body)
+    console.log(`[INFO] ${body.code} ${body.msg}`)
     event.sender.send("magnetReply", body);
   })
 })
@@ -124,7 +134,4 @@ ipc.on("debugStatusQuery", (event, _) => {
 });
 ipc.on("cdnAddressQuery", (event, _) => {
   event.sender.send("cdnAddressReply", cdn_addr);
-});
-ipc.on("platformQuery", (event, _) => {
-  event.sender.send("platformReply", process.platform);
 });
