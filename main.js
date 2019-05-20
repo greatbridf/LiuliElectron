@@ -2,7 +2,7 @@
 const {app, BrowserWindow, clipboard, Menu} = require('electron');
 const ipc = require('electron').ipcMain;
 const request = require('request');
-const cdn_addr = "https://greatbridf.top";
+const cdn_addr = "https://interface.greatbridf.top";
 const os = require('os');
 
 var debug = false;
@@ -102,7 +102,7 @@ app.on('window-all-closed', ()=> {
 
 // Register IPC listeners
 ipc.on("articlesQuery", (event, req) => {
-  request(`${cdn_addr}/interface/LiuliGo.cgi?req=articles&page=${req}`, (err, _, body) => {
+  request(`${cdn_addr}/liuli/articles?page=${req}`, (err, _, body) => {
     if (err)
       throw "Error getting articles";
     body = JSON.parse(body)
@@ -116,7 +116,7 @@ ipc.on("articlesQuery", (event, req) => {
 })
 
 ipc.on("magnetQuery", (event, articleID) => {
-  request(`${cdn_addr}/interface/LiuliGo.cgi?req=magnet&id=${articleID}`, (err, _, body) => {
+  request(`${cdn_addr}/liuli/magnet?id=${articleID}`, (err, _, body) => {
     if (err)
       throw "Error getting magnet link";
     body = JSON.parse(body)

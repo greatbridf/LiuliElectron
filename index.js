@@ -8,7 +8,7 @@ function getArticleID(link) {
 }
 
 function getArticleLink(link) {
-  return `${cdn_addr}/interface/LiuliGo.cgi?req=content&id=${getArticleID(link)}`;
+  return `${cdn_addr}/liuli/content?id=${getArticleID(link)}`;
 }
 
 function showSuccess() {
