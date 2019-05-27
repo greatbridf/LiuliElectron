@@ -17,11 +17,6 @@ var debug = (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d"
 var window;
 
 const menu = Menu.buildFromTemplate(menuTemplate)
-if (process.platform === "win32") {
-  Menu.setApplicationMenu(null)
-} else {
-  Menu.setApplicationMenu(menu)
-}
 
 function createWindow() {
   window = new BrowserWindow({width: 1280, height: 720});
@@ -58,9 +53,11 @@ function createWindow() {
     ).end()
   } else {
     if (process.platform === "win32") {
-      window.loadFile('index_win.html') // TODO: Windows index.html
+      Menu.setApplicationMenu(null)
+      window.loadFile('index_win.html')
     } else {
-      window.loadFile('index.html') // TODO: Windows index.html
+      Menu.setApplicationMenu(menu)
+      window.loadFile('index.html')
     }
   }
 }
