@@ -99,9 +99,11 @@ ipc.on("setClipboard", (_, content) => {
 ipc.on("debugStatusQuery", (event, _) => {
   event.sender.send("debugStatusReply", debug);
 });
+
 ipc.on("cdnAddressQuery", (event, _) => {
   event.sender.send("cdnAddressReply", cdn_addr);
 });
+
 ipc.on('fontPathQuery', function(event) {
   event.sender.send('fontPathReply', path.join(userData, 'font.css'))
 })
