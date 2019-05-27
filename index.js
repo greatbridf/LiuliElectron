@@ -106,4 +106,11 @@ ipc.once("cdnAddressReply", (_, resp) => {
   cdn_addr = resp;
   ipc.send("debugStatusQuery");
 });
+ipc.once('fontPathReply', function(_, resp) {
+  var elem = document.createElement('link')
+  elem.href = resp
+  elem.rel = 'stylesheet'
+  document.head.appendChild(elem)
+})
+ipc.send('fontPathQuery')
 ipc.send("cdnAddressQuery");
