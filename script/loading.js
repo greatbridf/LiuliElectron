@@ -6,6 +6,6 @@ ipc.on('loadProgress', function(_, resp) {
 })
 
 ipc.on('loadFinished', function() {
-  window.location = 'index.html'
+  ipc.send('showHomePage')
 })
 // TODO: current progress bar

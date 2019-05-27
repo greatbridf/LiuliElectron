@@ -52,13 +52,7 @@ function createWindow() {
     }
     ).end()
   } else {
-    if (process.platform === "win32") {
-      Menu.setApplicationMenu(null)
-      window.loadFile('index_win.html')
-    } else {
-      Menu.setApplicationMenu(menu)
-      window.loadFile('index.html')
-    }
+    showHomePage()
   }
 }
 
@@ -66,6 +60,16 @@ app.on('ready', createWindow);
 app.on('window-all-closed', ()=> {
   app.quit()
 })
+
+function showHomePage() {
+  if (process.platform === "win32") {
+    Menu.setApplicationMenu(null)
+    window.loadFile('index_win.html')
+  } else {
+    Menu.setApplicationMenu(menu)
+    window.loadFile('index.html')
+  }
+}
 
 // Register IPC listeners
 ipc.on("articlesQuery", (event, req) => {
@@ -106,4 +110,8 @@ ipc.on("cdnAddressQuery", (event, _) => {
 
 ipc.on('fontPathQuery', function(event) {
   event.sender.send('fontPathReply', path.join(userData, 'font.css'))
+})
+
+ipc.on('showHomePage', function() {
+  showHomePage()
 })
