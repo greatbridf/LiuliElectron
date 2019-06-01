@@ -5,12 +5,14 @@ const fs = require('fs')
 const path = require('path')
 const https = require('https')
 const request = require('request');
-const cdn_addr = "https://interface.greatbridf.top";
 const os = require('os');
+
 const menuTemplate = require('./script/menu.js').template
+const utils = require('./script/utils.js')
+
+const cdn_addr = "https://interface.greatbridf.top";
 const userData = app.getPath('userData')
 const fontPath = path.join(userData, 'SourceHanSansSC-Regular.otf')
-const utils = require('./script/utils.js')
 
 var debug = (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
 
