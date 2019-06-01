@@ -6,7 +6,7 @@
     "appId": "com.greatbridf.LiuliElectron",
     "mac": {
       "target": [
-        "zip"
+        "dmg"
       ],
       "publish": [
         "github"
@@ -24,7 +24,7 @@
   "scripts": {
     "test": "electron . --debug",
     "start": "electron .",
-    "dist": "electron-builder -mwl"
+    "dist": "electron-builder -mw"
   },
   "devDependencies": {
     "electron": "^4.0.1",
