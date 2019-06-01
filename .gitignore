@@ -10,3 +10,4 @@ start.sh
 run.sh
 # Distibution
 dist/
+release/
