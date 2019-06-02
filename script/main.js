@@ -65,11 +65,10 @@ app.on('window-all-closed', ()=> {
 function showHomePage() {
   if (process.platform === "win32") {
     Menu.setApplicationMenu(null)
-    window.loadFile('index_win.html')
   } else {
     Menu.setApplicationMenu(menu)
-    window.loadFile('index.html')
   }
+  window.loadFile('index.html')
 }
 
 // Register IPC listeners
@@ -115,4 +114,8 @@ ipc.on('fontPathQuery', function(event) {
 
 ipc.on('showHomePage', function() {
   showHomePage()
+})
+
+ipc.on('platformQuery', function(event) {
+  event.sender.send('platformReply', process.platform)
 })

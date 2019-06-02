@@ -30,9 +30,11 @@
     "dist": "npx webpack && electron-builder -mw"
   },
   "devDependencies": {
+    "css-loader": "^2.1.1",
     "electron": "^4.0.1",
     "electron-builder": "^20.42.0",
     "vue": "^2.6.10",
+    "style-loader": "^0.23.1",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2"
   },

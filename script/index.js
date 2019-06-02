@@ -9,8 +9,7 @@ function getArticleID(link) {
 
 function getArticleLink(link) {
   return `${cdn_addr}/liuli/content?id=${getArticleID(link)}`;
-}
-
+} 
 function showSuccess() {
   if (!window.SUCCESS)
     window.SUCCESS = jQuery(".success");
@@ -108,5 +107,17 @@ ipc.once('fontPathReply', function(_, resp) {
   elem.rel = 'stylesheet'
   document.head.appendChild(elem)
 })
+ipc.once('platformReply', function (_, resp) {
+  if (resp === 'win32') {
+    var elem = document.createElement('link')
+    elem.href = 'style/windows.css'
+    elem.rel = 'stylesheet'
+    document.head.appendChild(elem)
+    jQuery('body').hide(function() {
+      jQuery('body').show()
+    })
+  }
+})
+ipc.send('platformQuery')
 ipc.send('fontPathQuery')
 ipc.send("cdnAddressQuery");
