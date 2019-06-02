@@ -17,10 +17,10 @@
   <div class="row">
     <!-- Main nav bar -->
     <div class="col-sm-4 hacg-block">
-      <ul class="list-group">
-        <li class="list-group-item button" :class="{ active: head === key }" @click="item_click" v-for="(item, key) of articles">{{item.title}}</li>
-        <li class="list-group-item button" @click="load_more">More...</li>
-      </ul>
+      <div class="list-group">
+        <a href="javascript:;" class="list-group-item list-group-item-action" :class="{ active: head === key }" @click="item_click" v-for="(item, key) of articles">{{item.title}}</a>
+        <a href="javascript:;" class="list-group-item list-group-item-action" @click="load_more">More...</a>
+      </div>
     </div>
     <!-- End -->
 

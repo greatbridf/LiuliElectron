@@ -6,19 +6,6 @@
   -webkit-app-region: no-drag;
 }
 
-.button {
-  transition: filter 125ms;
-}
-
-.button:hover {
-  filter: invert(10%);
-  cursor: pointer;
-}
-
-.button:active {
-  filter: invert(20%);
-}
-
 .right {
   float: right;
 }
