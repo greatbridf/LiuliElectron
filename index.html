@@ -18,7 +18,7 @@
     <!-- Main nav bar -->
     <div class="col-sm-4 hacg-block">
       <ul class="list-group">
-        <li class="list-group-item button" @click="item_click" v-for="article of articles">{{article.title}}</li>
+        <li class="list-group-item button" :class="{ active: head === key }" @click="item_click" v-for="(item, key) of articles">{{item.title}}</li>
         <li class="list-group-item button" @click="load_more">More...</li>
       </ul>
     </div>
@@ -27,10 +27,10 @@
     <!-- Article area -->
     <div class="col-sm-8 hacg-block">
       <div class="card">
-        <img :src="img" class="card-img-top">
+        <img :src="article.img" class="card-img-top">
         <div class="card-body">
-          <h4 class="card-title">{{title}}</h4>
-          <p class="card-text">{{description}}</p>
+          <h4 class="card-title">{{article.title}}</h4>
+          <p class="card-text">{{article.description}}</p>
           <button :disabled="action_disabled" class="btn btn-info" data-toggle="modal" data-target="#magnet" @click="get_magnet">获取磁力链接</button>
           <button :disabled="action_disabled" class="btn btn-primary right" data-toggle="modal" data-target="#article">进入文章页面</button>
         </div>

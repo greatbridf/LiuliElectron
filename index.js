@@ -28,44 +28,40 @@ function showFailure() {
 var doc_app = new Vue({
   el: "#app",
   data: {
-    articles: [{title: "Loading..."}],
-    title: "Loading...",
-    description: "Loading...",
-    img: "",
-    link: "",
+    articles: [],
+    article: {
+      title: 'Loading...',
+      description: 'Loading...',
+      img: '',
+      link: ''
+    },
     magnet_links: null,
     iframe_src: null,
     page: 1,
+    head: 0,
     action_disabled: true,
     getting_magnet_link: true,
     magnet_link_error: false
   },
   methods: {
     update_data: i => {
-      let article = doc_app.articles[i];
-      for (let key in article)
-        doc_app[key] = article[key];
-      let on = document.querySelector('.active');
-      if (on)
-        on.classList.remove('active');
-      document.querySelectorAll('.list-group-item')[i].classList.add('active');
-      doc_app.action_disabled = false;
+      doc_app.head = i
+      doc_app.article = doc_app.articles[i]
       doc_app.getting_magnet_link = true;
       doc_app.magnet_links = null;
       doc_app.magnet_link_error = false
-      doc_app.iframe_src = getArticleLink(doc_app.link);
+      doc_app.iframe_src = getArticleLink(doc_app.articles[doc_app.head].link);
     },
     load_data: data => {
-      let me = doc_app;
-      if (me.articles[0].title === "Loading...") {
-        me.articles = data.articles;
-        me.update_data(0);
+      if (doc_app.action_disabled) {
+        doc_app.articles = data.articles;
+        doc_app.action_disabled = false;
+        doc_app.update_data(0);
       } else
-        me.articles = me.articles.concat(data.articles);
+        doc_app.articles = doc_app.articles.concat(data.articles);
     },
     item_click: event => {
       let text = event.target.innerText;
-      if (text === "Loading...") return;
       doc_app.articles.forEach((elem, index) => {
         if (text === elem.title)
           doc_app.update_data(index);
@@ -89,7 +85,7 @@ var doc_app = new Vue({
         doc_app.magnet_links = resp.data.magnets;
         doc_app.getting_magnet_link = false;
       });
-      ipc.send("magnetQuery", getArticleID(doc_app.link));
+      ipc.send("magnetQuery", getArticleID(doc_app.article.link));
     },
     copy_to_clipboard: event => {
       ipc.send("setClipboard", event.target.innerText);
