@@ -1,5 +1,5 @@
 'use strict';
-const ipc = require("electron").ipcRenderer;
+import {ipcRenderer as ipc} from 'electron'
 var cdn_addr = "";
 
 function getArticleID(link) {

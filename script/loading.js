@@ -1,5 +1,5 @@
 'use strict';
-const ipc = require('electron').ipcRenderer
+import {ipcRenderer as ipc} from 'electron'
 
 ipc.on('loadProgress', function(_, resp) {
   document.getElementById('progressbar_progress').style.setProperty('width', `${resp}%`)

@@ -1,7 +1,7 @@
 {
   "name": "Hacg.me",
   "version": "1.5.1",
-  "main": "main.js",
+  "main": "dist/main.bundle.js",
   "build": {
     "appId": "com.greatbridf.LiuliElectron",
     "mac": {
@@ -28,7 +28,9 @@
   },
   "devDependencies": {
     "electron": "^4.0.1",
-    "electron-builder": "^20.38.5"
+    "electron-builder": "^20.42.0",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
   },
   "dependencies": {
     "request": "^2.88.0"

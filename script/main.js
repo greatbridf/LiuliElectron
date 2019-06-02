@@ -7,8 +7,8 @@ const https = require('https')
 const request = require('request');
 const os = require('os');
 
-const menuTemplate = require('./script/menu.js').template
-const utils = require('./script/utils.js')
+const menuTemplate = require('./menu').template
+const utils = require('./utils')
 
 const cdn_addr = "https://interface.greatbridf.top";
 const userData = app.getPath('userData')
