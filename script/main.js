@@ -1,14 +1,13 @@
 'use strict';
-const {app, BrowserWindow, clipboard, Menu} = require('electron');
-const ipc = require('electron').ipcMain;
-const fs = require('fs')
-const path = require('path')
-const https = require('https')
-const request = require('request');
-const os = require('os');
+import {app, BrowserWindow, clipboard, Menu, ipcMain as ipc} from 'electron'
+import fs from 'fs'
+import path from 'path'
+import https from 'https'
+import request from 'request'
+import os from 'os'
 
-const menuTemplate = require('./menu').template
-const utils = require('./utils')
+import {template as menuTemplate} from './menu'
+import {applyFont} from './utils'
 
 const cdn_addr = "https://interface.greatbridf.top";
 const userData = app.getPath('userData')

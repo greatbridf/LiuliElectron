@@ -1,4 +1,4 @@
-const {app} = require('electron')
+import {app} from 'electron'
 const template = [
   {
     label: app.getName(),
@@ -70,6 +70,4 @@ const template = [
     ]
   }
 ]
-module.exports = {
-  template
-}
+export {template}

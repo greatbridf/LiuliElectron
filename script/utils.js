@@ -1,4 +1,4 @@
-const fs = require('fs')
+import fs from 'fs'
 
 function applyFont(target, path) {
   var targetSafe = JSON.stringify(target).slice(1, -1)
@@ -16,6 +16,4 @@ function applyFont(target, path) {
   return true
 }
 
-module.exports = {
-  applyFont
-}
+export {applyFont}
