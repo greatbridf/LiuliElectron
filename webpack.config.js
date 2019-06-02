@@ -10,6 +10,24 @@ const rendererConfig = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+    ],
+  },
   target: 'electron-renderer'
 }
 
