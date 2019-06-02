@@ -113,7 +113,9 @@ ipc.once('platformReply', function (_, resp) {
     elem.href = 'style/windows.css'
     elem.rel = 'stylesheet'
     document.head.appendChild(elem)
-    jQuery('body').hide().show()
+    jQuery('body').hide(function() {
+      jQuery('body').show()
+    })
   }
 })
 ipc.send('platformQuery')
