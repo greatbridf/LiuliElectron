@@ -26,6 +26,10 @@ const rendererConfig = {
           },
         ],
       },
+      {
+        test: /\.ts$/i,
+        loader: 'ts-loader',
+      },
     ],
   },
   target: 'electron-renderer'
@@ -39,6 +43,14 @@ const mainConfig = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/i,
+        loader: 'ts-loader',
+      },
+    ]
   },
   target: 'electron-main',
 }

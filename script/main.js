@@ -1,19 +1,18 @@
 'use strict';
 import {app, BrowserWindow, clipboard, Menu, ipcMain as ipc} from 'electron'
-import fs from 'fs'
-import path from 'path'
-import https from 'https'
-import request from 'request'
-import os from 'os'
+import * as fs from 'fs'
+import * as path from 'path'
+import fetch from 'node-fetch'
 
 import {template as menuTemplate} from './menu'
 import {applyFont} from './utils'
+import {DownloadFont} from './main-process/get-font.ts'
 
 const cdn_addr = "https://interface.greatbridf.top";
 const userData = app.getPath('userData')
 const fontPath = path.join(userData, 'SourceHanSansSC-Regular.otf')
 
-var debug = (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
+const debug = (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
 
 var window;
 
@@ -24,34 +23,18 @@ function createWindow() {
 
   if (!fs.existsSync(fontPath)) {
     window.loadFile('loading.html')
-    https.request(
-    {
-      host: 'static.greatbridf.top',
-      path: '/fonts/Source%20Han%20Sans/SourceHanSansSC-Regular.otf',
-      encoding: null
-    },
-    function(response) {
-      var length = response.headers['content-length']
-      var progress = 0
-      var stream = fs.createWriteStream(fontPath, {encoding: null})
-
-      response.on('data', function(data) {
-        stream.write(data)
-        progress += data.length
-        window.webContents.send('loadProgress', Math.floor(progress / length * 10000)/100)
+    // Download font
+    new DownloadFont(fontPath)
+      .progress(function(progress) {
+        window.webContents.send('loadProgress', progress)
       })
-
-      response.on('end', function() {
-        stream.end()
-        if (utils.applyFont(fontPath, path.join(userData, 'font.css'))) {
+      .finish(function() {
+        if (applyFont(fontPath, path.join(userData, 'font.css'))) {
           window.webContents.send('loadFinished')
         } else {
-          throw "font not applied"
+          throw 'font not applied'
         }
-      })
-
-    }
-    ).end()
+      }).download()
   } else {
     showHomePage()
   }
@@ -73,26 +56,22 @@ function showHomePage() {
 
 // Register IPC listeners
 ipc.on("articlesQuery", (event, req) => {
-  request(`${cdn_addr}/liuli/articles?page=${req}`, (err, _, body) => {
-    if (err)
-      throw "Error getting articles";
-    body = JSON.parse(body)
-    if (body.code !== 200) {
-      console.log(`[ERROR] ${body.code} ${body.msg}`)
-      throw body.msg ? body.msg : "Unexpected error"
-    }
-    console.log(`[INFO] ${body.code} ${body.msg}`)
-    event.sender.send("articlesReply", body.data);
-  });
+  fetch(`${cdn_addr}/liuli/articles?page=${req}`)
+  .then((resp) => {
+    return resp.json()
+  })
+  .then((json) => {
+    event.sender.send('articlesReply', json.data)
+  })
 })
 
 ipc.on("magnetQuery", (event, articleID) => {
-  request(`${cdn_addr}/liuli/magnet?id=${articleID}`, (err, _, body) => {
-    if (err)
-      throw "Error getting magnet link";
-    body = JSON.parse(body)
-    console.log(`[INFO] ${body.code} ${body.msg}`)
-    event.sender.send("magnetReply", body);
+  fetch(`${cdn_addr}/liuli/magnet?id=${articleID}`)
+  .then((resp) => {
+    return resp.json()
+  })
+  .then((json) => {
+    event.sender.send('magnetReply', json)
   })
 })
 
