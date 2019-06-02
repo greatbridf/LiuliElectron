@@ -22,9 +22,9 @@
     }
   },
   "scripts": {
-    "test": "electron . --debug",
-    "start": "electron .",
-    "dist": "electron-builder -mw"
+    "test": "npx webpack && electron . --debug",
+    "start": "npx webpack && electron .",
+    "dist": "npx webpack && electron-builder -mw"
   },
   "devDependencies": {
     "electron": "^4.0.1",
