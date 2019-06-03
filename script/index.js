@@ -1,5 +1,6 @@
 'use strict';
 import {ipcRenderer as ipc} from 'electron'
+import Vue from 'vue'
 var cdn_addr = "";
 
 function getArticleID(link) {

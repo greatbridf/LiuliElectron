@@ -32,6 +32,11 @@ const rendererConfig = {
       },
     ],
   },
+  resolve: {
+    alias: {
+      vue: 'vue/dist/vue.esm.js'
+    }
+  },
   target: 'electron-renderer'
 }
 

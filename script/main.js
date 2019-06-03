@@ -7,10 +7,9 @@ import fetch from 'node-fetch'
 import {template as menuTemplate} from './menu'
 import {applyFont} from './utils'
 import {DownloadFont} from './main-process/get-font.ts'
+import Config from './config.ts'
 
-const cdn_addr = "https://interface.greatbridf.top";
-const userData = app.getPath('userData')
-const fontPath = path.join(userData, 'SourceHanSansSC-Regular.otf')
+var config = new Config()
 
 const debug = (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
 
@@ -21,15 +20,15 @@ const menu = Menu.buildFromTemplate(menuTemplate)
 function createWindow() {
   window = new BrowserWindow({width: 1280, height: 720});
 
-  if (!fs.existsSync(fontPath)) {
+  if (!fs.existsSync(config.fontPath)) {
     window.loadFile('loading.html')
     // Download font
-    new DownloadFont(fontPath)
+    new DownloadFont(config.fontPath)
       .progress(function(progress) {
         window.webContents.send('loadProgress', progress)
       })
       .finish(function() {
-        if (applyFont(fontPath, path.join(userData, 'font.css'))) {
+        if (applyFont(config.fontPath, path.join(config.userData, 'font.css'))) {
           window.webContents.send('loadFinished')
         } else {
           throw 'font not applied'
@@ -56,7 +55,7 @@ function showHomePage() {
 
 // Register IPC listeners
 ipc.on("articlesQuery", (event, req) => {
-  fetch(`${cdn_addr}/liuli/articles?page=${req}`)
+  fetch(`${config.cdn_addr}/liuli/articles?page=${req}`)
   .then((resp) => {
     return resp.json()
   })
@@ -66,7 +65,7 @@ ipc.on("articlesQuery", (event, req) => {
 })
 
 ipc.on("magnetQuery", (event, articleID) => {
-  fetch(`${cdn_addr}/liuli/magnet?id=${articleID}`)
+  fetch(`${config.cdn_addr}/liuli/magnet?id=${articleID}`)
   .then((resp) => {
     return resp.json()
   })
@@ -84,11 +83,11 @@ ipc.on("debugStatusQuery", (event, _) => {
 });
 
 ipc.on("cdnAddressQuery", (event, _) => {
-  event.sender.send("cdnAddressReply", cdn_addr);
+  event.sender.send("cdnAddressReply", config.cdn_addr);
 });
 
 ipc.on('fontPathQuery', function(event) {
-  event.sender.send('fontPathReply', path.join(userData, 'font.css'))
+  event.sender.send('fontPathReply', path.join(config.userData, 'font.css'))
 })
 
 ipc.on('showHomePage', function() {
