@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "pretty": true,
     "newLine": "LF",
-    "allowJs": true
+    "allowJs": true,
+    "strict": true,
   }
 }

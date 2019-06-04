@@ -4,7 +4,7 @@ const config = new Config()
 
 function get_article_id(link: string): string {
   let regexp = /wp\/([0-9]*)\.html/
-  return regexp.exec(link)[1]
+  return regexp.exec(link)![1]
 }
 
 function get_article_link(link: string): string {

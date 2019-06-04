@@ -1,4 +1,5 @@
 const path = require('path')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const rendererConfig = {
   mode: 'development',
@@ -29,6 +30,17 @@ const rendererConfig = {
       {
         test: /\.ts$/i,
         loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/i],
+        },
+      },
+      {
+        test: /\.vue$/i,
+        loader: 'vue-loader',
+      },
+      {
+        test: /\.js$/i,
+        loader: 'babel-loader',
       },
     ],
   },
@@ -39,6 +51,9 @@ const rendererConfig = {
     extensions: ['.js', '.ts', '.json'],
   },
   target: 'electron-renderer',
+  plugins: [
+    new VueLoaderPlugin()
+  ]
 }
 
 const mainConfig = {

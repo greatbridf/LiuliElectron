@@ -31,7 +31,7 @@
         <div class="card-body">
           <h4 class="card-title">{{article.title}}</h4>
           <p class="card-text">{{article.description}}</p>
-          <button :disabled="action_disabled" class="btn btn-info" data-toggle="modal" data-target="#magnet" @click="get_magnet">获取磁力链接</button>
+          <button :disabled="action_disabled" class="btn btn-info" data-toggle="modal" data-target="#magnet">获取磁力链接</button>
           <button :disabled="action_disabled" class="btn btn-primary right" data-toggle="modal" data-target="#article">进入文章页面</button>
         </div>
       </div>
@@ -63,26 +63,7 @@
       <!-- End -->
 
       <!-- Magnet link selector -->
-      <div class="modal fade" id="magnet">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">选择磁力链接...</h4>
-              <button class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-              <div class="list-group">
-                <a href="javascript:;" data-dismiss="modal" @click="copy_to_clipboard" class="list-group-item" v-for="magnet of magnet_links">{{magnet}}</a>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <span class="text-muted small" v-if="getting_magnet_link">正在获取中</span>
-              <span class="text-muted small" v-if="magnet_link_error">获取磁力链接失败</span>
-              <button class="btn btn-danger" data-dismiss="modal">关闭</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <magnet-box :cid="article.id"></magnet-box>
       <!-- End -->
     </div>
   </div>

@@ -3,8 +3,13 @@ import * as fs from 'fs'
 
 class DownloadFont {
   private path: string
-  private onfinish: ()=>void
-  private onprogress: (progress: number)=>void
+  private onfinish: ()=>void = () => {
+    throw 'NotImplementedError'
+  }
+  
+  private onprogress: (progress: number)=>void = (_: number) => {
+    throw 'NotImplementedError'
+  }
 
   constructor(path: string) {
     this.path = path
@@ -28,9 +33,9 @@ class DownloadFont {
         path: '/fonts/Source%20Han%20Sans/SourceHanSansSC-Regular.otf',
       },
       (response) => {
-        var length: number = parseInt(response.headers['content-length'])
+        var length: number = parseInt(response.headers['content-length']!)
         var progress: number = 0
-        var stream = fs.createWriteStream(this.path, {encoding: null})
+        var stream = fs.createWriteStream(this.path, {encoding: 'binary'})
 
         response.on('data', (data) => {
           stream.write(data)

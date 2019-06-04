@@ -1,6 +1,7 @@
 'use strict';
 import {ipcRenderer as ipc} from 'electron'
 import Vue from 'vue'
+import MagnetBox from './index-component/magnet-box.vue'
 
 import {
   get_article_id as getArticleID,
@@ -32,23 +33,19 @@ var doc_app = new Vue({
       title: 'Loading...',
       description: 'Loading...',
       img: '',
-      link: ''
+      link: '',
+      id: '0',
     },
-    magnet_links: null,
     iframe_src: null,
     page: 1,
     head: 0,
     action_disabled: true,
-    getting_magnet_link: true,
-    magnet_link_error: false
   },
   methods: {
     update_data: i => {
       doc_app.head = i
       doc_app.article = doc_app.articles[i]
-      doc_app.getting_magnet_link = true;
-      doc_app.magnet_links = null;
-      doc_app.magnet_link_error = false
+      doc_app.article.id = doc_app.getArticleID(doc_app.article.link)
       doc_app.iframe_src = getArticleLink(doc_app.articles[doc_app.head].link);
     },
     load_data: data => {
@@ -72,24 +69,10 @@ var doc_app = new Vue({
       });
       ipc.send("articlesQuery", doc_app.page++);
     },
-    get_magnet: _ => {
-      if (doc_app.magnet_links) return;
-      ipc.once("magnetReply", (_, resp) => {
-        if (resp.code !== 200) {
-          showFailure();
-          doc_app.getting_magnet_link = false;
-          doc_app.magnet_link_error = true;
-          return;
-        }
-        doc_app.magnet_links = resp.data.magnets;
-        doc_app.getting_magnet_link = false;
-      });
-      ipc.send("magnetQuery", getArticleID(doc_app.article.link));
-    },
-    copy_to_clipboard: event => {
-      ipc.send("setClipboard", event.target.innerText);
-      showSuccess();
-    }
+    getArticleID,
+  },
+  components: {
+    'magnet-box': MagnetBox
   }
 });
 
