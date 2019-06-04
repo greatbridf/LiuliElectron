@@ -35,9 +35,10 @@ const rendererConfig = {
   resolve: {
     alias: {
       vue: 'vue/dist/vue.esm.js'
-    }
+    },
+    extensions: ['.js', '.ts', '.json'],
   },
-  target: 'electron-renderer'
+  target: 'electron-renderer',
 }
 
 const mainConfig = {
@@ -56,6 +57,9 @@ const mainConfig = {
         loader: 'ts-loader',
       },
     ]
+  },
+  resolve: {
+    extensions: ['.js', '.ts', '.json'],
   },
   target: 'electron-main',
 }

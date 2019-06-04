@@ -1,16 +1,15 @@
 'use strict';
 import {ipcRenderer as ipc} from 'electron'
 import Vue from 'vue'
-var cdn_addr = "";
 
-function getArticleID(link) {
-  let regexp = /wp\/([0-9]*)\.html/;
-  return regexp.exec(link)[1];
-}
+import {
+  get_article_id as getArticleID,
+  get_article_link as getArticleLink
+} from './article_util'
 
-function getArticleLink(link) {
-  return `${cdn_addr}/liuli/content?id=${getArticleID(link)}`;
-} 
+import Config from './config'
+const config = new Config()
+
 function showSuccess() {
   if (!window.SUCCESS)
     window.SUCCESS = jQuery(".success");
@@ -94,31 +93,22 @@ var doc_app = new Vue({
   }
 });
 
-ipc.once("debugStatusReply", (_, resp) => {
-  if (resp === false)
-    doc_app.load_more();
-});
-ipc.once("cdnAddressReply", (_, resp) => {
-  cdn_addr = resp;
-  ipc.send("debugStatusQuery");
-});
-ipc.once('fontPathReply', function(_, resp) {
+// apply windows scrollbar stylesheet
+if (config.platform === 'win32') {
   var elem = document.createElement('link')
-  elem.href = resp
+  elem.href = 'style/windows.css'
   elem.rel = 'stylesheet'
   document.head.appendChild(elem)
-})
-ipc.once('platformReply', function (_, resp) {
-  if (resp === 'win32') {
-    var elem = document.createElement('link')
-    elem.href = 'style/windows.css'
-    elem.rel = 'stylesheet'
-    document.head.appendChild(elem)
-    jQuery('body').hide(function() {
-      jQuery('body').show()
-    })
-  }
-})
-ipc.send('platformQuery')
-ipc.send('fontPathQuery')
-ipc.send("cdnAddressQuery");
+  jQuery('body').hide(function() {
+    jQuery('body').show()
+  })
+}
+
+// apply font
+var elem = document.createElement('link')
+elem.href = config.fontPath
+elem.rel = 'stylesheet'
+document.head.appendChild(elem)
+if (!config.debug) {
+  doc_app.load_more()
+}

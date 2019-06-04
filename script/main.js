@@ -6,12 +6,10 @@ import fetch from 'node-fetch'
 
 import {template as menuTemplate} from './menu'
 import {applyFont} from './utils'
-import {DownloadFont} from './main-process/get-font.ts'
-import Config from './config.ts'
+import {DownloadFont} from './main-process/get-font'
+import Config from './config'
 
 var config = new Config()
-
-const debug = (process.argv.indexOf("--debug") !== -1 || process.argv.indexOf("-d") !== -1)
 
 var window;
 
@@ -78,22 +76,10 @@ ipc.on("setClipboard", (_, content) => {
   clipboard.writeText(content);
 });
 
-ipc.on("debugStatusQuery", (event, _) => {
-  event.sender.send("debugStatusReply", debug);
-});
-
-ipc.on("cdnAddressQuery", (event, _) => {
-  event.sender.send("cdnAddressReply", config.cdn_addr);
-});
-
 ipc.on('fontPathQuery', function(event) {
   event.sender.send('fontPathReply', path.join(config.userData, 'font.css'))
 })
 
 ipc.on('showHomePage', function() {
   showHomePage()
-})
-
-ipc.on('platformQuery', function(event) {
-  event.sender.send('platformReply', process.platform)
 })
