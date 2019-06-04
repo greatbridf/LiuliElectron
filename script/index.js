@@ -89,7 +89,7 @@ if (config.platform === 'win32') {
 
 // apply font
 var elem = document.createElement('link')
-elem.href = config.fontPath
+elem.href = config.fontCssPath
 elem.rel = 'stylesheet'
 document.head.appendChild(elem)
 if (!config.debug) {
