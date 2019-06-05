@@ -4,8 +4,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const rendererConfig = {
   mode: 'development',
   entry: {
-    index: path.resolve(__dirname, 'script/index.ts'),
-    loading: path.resolve(__dirname, 'script/loading.ts'),
+    index: path.resolve(__dirname, 'static/index.ts'),
+    loading: path.resolve(__dirname, 'static/loading.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -46,7 +46,9 @@ const rendererConfig = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.esm.js'
+      vue: 'vue/dist/vue.esm.js',
+      src: path.join(__dirname, 'src'),
+      static: path.join(__dirname, 'static'),
     },
     extensions: ['.js', '.ts', '.json'],
   },
@@ -59,7 +61,7 @@ const rendererConfig = {
 const mainConfig = {
   mode: 'development',
   entry: {
-    main: path.resolve(__dirname, 'script/main.ts'),
+    main: path.resolve(__dirname, 'src/main-process/main.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -75,6 +77,10 @@ const mainConfig = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.json'],
+    alias: {
+      src: path.join(__dirname, 'src'),
+      static: path.join(__dirname, 'static'),
+    },
   },
   target: 'electron-main',
 }

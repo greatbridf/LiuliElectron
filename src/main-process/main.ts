@@ -4,10 +4,10 @@ import * as fs from 'fs'
 import * as path from 'path'
 import fetch from 'node-fetch'
 
-import menuTemplate from './menu'
-import {applyFont} from './utils'
-import {DownloadFont} from './main-process/get-font'
-import Config from './config'
+import menuTemplate from 'src/menu'
+import {applyFont} from 'src/utils'
+import {DownloadFont} from 'src/main-process/get-font'
+import Config from 'src/config'
 
 var config = new Config()
 
@@ -19,7 +19,7 @@ function createWindow() {
   window = new BrowserWindow({width: 1280, height: 720});
 
   if (!fs.existsSync(config.fontPath)) {
-    window.loadFile('loading.html')
+    window.loadFile('static/loading.html')
     // Download font
     new DownloadFont(config.fontPath)
       .progress(function(progress) {
@@ -48,7 +48,7 @@ function showHomePage() {
   } else {
     Menu.setApplicationMenu(menu)
   }
-  window.loadFile('index.html')
+  window.loadFile('static/index.html')
 }
 
 // Register IPC listeners

@@ -1,8 +1,0 @@
-@font-face {
-  font-family: "Source Han Sans SC";
-  src: url("/Users/david/Library/Application Support/Hacg.me/SourceHanSansSC-Regular.otf");
-}
-
-html, body {
-  font-family: "Source Han Sans SC" !important;
-}

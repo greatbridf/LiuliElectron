@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Config from '../config'
+import Config from 'src/config'
 import { ipcRenderer } from 'electron';
 const config = new Config()
 

@@ -1,19 +1,19 @@
 'use strict';
 import {ipcRenderer as ipc} from 'electron'
 import Vue from 'vue'
-import MagnetBox from './index-component/magnet-box.vue'
+import MagnetBox from 'src/index-component/magnet-box.vue'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import '../style/index.css'
+import 'static/css/index.css'
 import 'bootstrap'
 
 import {
   get_article_id as getArticleID,
   get_article_link as getArticleLink,
   Article,
-} from './article_util'
+} from 'src/article_util'
 
-import Config from './config'
+import Config from 'src/config'
 const config = new Config()
 
 /*

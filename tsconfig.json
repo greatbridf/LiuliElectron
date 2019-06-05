@@ -7,5 +7,9 @@
     "newLine": "LF",
     "allowJs": true,
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "src": ["./src"],
+    },
   }
 }
