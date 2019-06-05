@@ -1,17 +1,17 @@
 'use strict';
-import {app, BrowserWindow, clipboard, Menu, ipcMain as ipc} from 'electron'
+import {app, BrowserWindow, clipboard, Menu, ipcMain as ipc, IpcMessageEvent} from 'electron'
 import * as fs from 'fs'
 import * as path from 'path'
 import fetch from 'node-fetch'
 
-import {template as menuTemplate} from './menu'
+import menuTemplate from './menu'
 import {applyFont} from './utils'
 import {DownloadFont} from './main-process/get-font'
 import Config from './config'
 
 var config = new Config()
 
-var window;
+var window: BrowserWindow;
 
 const menu = Menu.buildFromTemplate(menuTemplate)
 
@@ -52,7 +52,7 @@ function showHomePage() {
 }
 
 // Register IPC listeners
-ipc.on("articlesQuery", (event, req) => {
+ipc.on("articlesQuery", (event: IpcMessageEvent, req: string) => {
   fetch(`${config.cdn_addr}/liuli/articles?page=${req}`)
   .then((resp) => {
     return resp.json()
@@ -62,7 +62,7 @@ ipc.on("articlesQuery", (event, req) => {
   })
 })
 
-ipc.on("magnetQuery", (event, articleID) => {
+ipc.on("magnetQuery", (event: IpcMessageEvent, articleID: string) => {
   fetch(`${config.cdn_addr}/liuli/magnet?id=${articleID}`)
   .then((resp) => {
     return resp.json()
@@ -72,11 +72,11 @@ ipc.on("magnetQuery", (event, articleID) => {
   })
 })
 
-ipc.on("setClipboard", (_, content) => {
+ipc.on("setClipboard", (_: IpcMessageEvent, content: string) => {
   clipboard.writeText(content);
 });
 
-ipc.on('fontPathQuery', function(event) {
+ipc.on('fontPathQuery', function(event: IpcMessageEvent) {
   event.sender.send('fontPathReply', path.join(config.userData, 'font.css'))
 })
 

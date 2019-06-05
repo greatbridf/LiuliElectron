@@ -4,8 +4,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const rendererConfig = {
   mode: 'development',
   entry: {
-    index: path.resolve(__dirname, 'script/index.js'),
-    loading: path.resolve(__dirname, 'script/loading.js'),
+    index: path.resolve(__dirname, 'script/index.ts'),
+    loading: path.resolve(__dirname, 'script/loading.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -59,7 +59,7 @@ const rendererConfig = {
 const mainConfig = {
   mode: 'development',
   entry: {
-    main: path.resolve(__dirname, 'script/main.js'),
+    main: path.resolve(__dirname, 'script/main.ts'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

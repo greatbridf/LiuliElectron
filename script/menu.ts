@@ -1,5 +1,5 @@
 import {app} from 'electron'
-const template = [
+const template: Electron.MenuItemConstructorOptions[] = [
   {
     label: app.getName(),
 	submenu: [
@@ -70,4 +70,4 @@ const template = [
     ]
   }
 ]
-export {template}
+export default template

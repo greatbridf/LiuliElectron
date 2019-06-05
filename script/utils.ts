@@ -1,6 +1,6 @@
-import fs from 'fs'
+import * as fs from 'fs'
 
-function applyFont(target, path) {
+function applyFont(target: string, path: string): boolean {
   var targetSafe = JSON.stringify(target).slice(1, -1)
   var data = `
   @font-face {
