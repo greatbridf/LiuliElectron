@@ -71,10 +71,13 @@ var doc_app = new Vue({
       });
     },
     load_more() {
-      ipc.once("articlesReply", (_: never, resp: object) => {
-        this.load_data(resp);
-      });
-      ipc.send("articlesQuery", this.page++);
+      fetch(`${config.cdn_addr}/liuli/articles?page=${this.page++}`)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then((json) => {
+        this.load_data(json.data)
+      })
     },
     getArticleID,
   },

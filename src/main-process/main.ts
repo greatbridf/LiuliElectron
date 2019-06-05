@@ -2,7 +2,6 @@
 import {app, BrowserWindow, clipboard, Menu, ipcMain as ipc, IpcMessageEvent} from 'electron'
 import * as fs from 'fs'
 import * as path from 'path'
-import fetch from 'node-fetch'
 
 import menuTemplate from 'src/menu'
 import {applyFont} from 'src/utils'
@@ -52,33 +51,9 @@ function showHomePage() {
 }
 
 // Register IPC listeners
-ipc.on("articlesQuery", (event: IpcMessageEvent, req: string) => {
-  fetch(`${config.cdn_addr}/liuli/articles?page=${req}`)
-  .then((resp) => {
-    return resp.json()
-  })
-  .then((json) => {
-    event.sender.send('articlesReply', json.data)
-  })
-})
-
-ipc.on("magnetQuery", (event: IpcMessageEvent, articleID: string) => {
-  fetch(`${config.cdn_addr}/liuli/magnet?id=${articleID}`)
-  .then((resp) => {
-    return resp.json()
-  })
-  .then((json) => {
-    event.sender.send('magnetReply', json)
-  })
-})
-
 ipc.on("setClipboard", (_: IpcMessageEvent, content: string) => {
   clipboard.writeText(content);
 });
-
-ipc.on('fontPathQuery', function(event: IpcMessageEvent) {
-  event.sender.send('fontPathReply', path.join(config.userData, 'font.css'))
-})
 
 ipc.on('showHomePage', function() {
   showHomePage()
