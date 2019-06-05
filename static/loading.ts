@@ -1,7 +1,7 @@
 'use strict';
 import {ipcRenderer as ipc, IpcMessageEvent} from 'electron'
 
-import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import 'static/css/loading.css'
 
 ipc.on('loadProgress', function(_: IpcMessageEvent, resp: string) {
