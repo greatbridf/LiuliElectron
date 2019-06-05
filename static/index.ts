@@ -16,22 +16,6 @@ import {
 import Config from 'src/config'
 const config = new Config()
 
-/*
-function showSuccess() {
-  if (!window.SUCCESS)
-    window.SUCCESS = jQuery(".success");
-  SUCCESS.fadeIn();
-  setInterval(()=>SUCCESS.fadeOut(), 2000);
-}
-
-function showFailure() {
-  if (!window.FAILURE)
-    window.FAILURE = jQuery(".failure");
-  FAILURE.fadeIn();
-  setInterval(()=>FAILURE.fadeOut(), 2000);
-}
-*/
-
 var doc_app = new Vue({
   el: "#app",
   data: {
@@ -82,7 +66,7 @@ var doc_app = new Vue({
     getArticleID,
   },
   components: {
-    'magnet-box': MagnetBox
+    'magnet-box': MagnetBox,
   }
 });
 

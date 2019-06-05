@@ -3,6 +3,10 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
+          <!-- Information popup -->
+          <info-popup name="success" ref="success"></info-popup>
+          <info-popup name="failure" ref="failure"></info-popup>
+
           <h4 class="modal-title">选择磁力链接...</h4>
           <button class="close" data-dismiss="modal">&times;</button>
         </div>
@@ -10,7 +14,6 @@
           <div class="list-group">
             <a
               href="javascript:;"
-              data-dismiss="modal"
               @click="copy_to_clipboard"
               class="list-group-item"
               v-for="magnet in magnet_links"
@@ -31,6 +34,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Config from 'src/config'
+import InfoPopup from 'src/index-component/info-popup.vue'
 import { ipcRenderer } from 'electron';
 const config = new Config()
 
@@ -53,6 +57,7 @@ export default Vue.extend({
           .catch(() => {
             this.err = true
             this.finished = true
+            ;(this.$refs.failure as Vue).$emit('show')
           })
       },
       deep: true,
@@ -68,7 +73,11 @@ export default Vue.extend({
   methods: {
     copy_to_clipboard(event: any) {
       ipcRenderer.send('setClipboard', event.target.innerText)
+      ;(this.$refs.success as Vue).$emit('show')
     }
+  },
+  components: {
+    'info-popup': InfoPopup,
   }
 })
 </script>
