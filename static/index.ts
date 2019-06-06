@@ -72,13 +72,7 @@ var doc_app = new Vue({
 
 // apply windows scrollbar stylesheet
 if (config.platform === 'win32') {
-  var elem = document.createElement('link')
-  elem.href = 'style/windows.css'
-  elem.rel = 'stylesheet'
-  document.head.appendChild(elem)
-  jQuery('body').hide(function() {
-    jQuery('body').show()
-  })
+  require('static/css/windows.css')
 }
 
 // apply font
