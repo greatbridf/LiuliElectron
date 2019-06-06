@@ -34,9 +34,9 @@
     }
   },
   "scripts": {
-    "test": "npx webpack && electron . --debug",
-    "start": "npx webpack && electron .",
-    "dist": "npx webpack && electron-builder -mw"
+    "test": "npx webpack --config webpack.dev.js && electron . --debug",
+    "start": "npx webpack --config webpack.dev.js && electron .",
+    "dist": "npx webpack --config webpack.prod.js && electron-builder -mw"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -56,7 +56,8 @@
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.2"
+    "webpack-cli": "^3.3.2",
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {}
 }

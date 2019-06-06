@@ -2,7 +2,6 @@ const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const rendererConfig = {
-  mode: 'development',
   entry: {
     index: path.resolve(__dirname, 'static/index.ts'),
     loading: path.resolve(__dirname, 'static/loading.ts'),
@@ -59,7 +58,6 @@ const rendererConfig = {
 }
 
 const mainConfig = {
-  mode: 'development',
   entry: {
     main: path.resolve(__dirname, 'src/main-process/main.ts'),
   },
@@ -85,4 +83,7 @@ const mainConfig = {
   target: 'electron-main',
 }
 
-module.exports = [ rendererConfig, mainConfig ]
+module.exports = {
+  rendererConfig,
+  mainConfig,
+}
