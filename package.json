@@ -34,9 +34,11 @@
     }
   },
   "scripts": {
-    "test": "npx webpack --config webpack.dev.js && electron . --debug",
-    "start": "npx webpack --config webpack.dev.js && electron .",
-    "dist": "npx webpack --config webpack.prod.js && electron-builder -mw"
+    "test": "electron . --debug",
+    "start": "electron .",
+    "dist": "npx webpack --config webpack.prod.js && electron-builder -mw",
+    "pack": "npx webpack --config webpack.dev.js",
+    "watch": "npx webpack --config webpack.dev.js --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
