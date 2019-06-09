@@ -72,6 +72,7 @@ import MagnetBox from 'src/index-component/magnet-box.vue'
 
 import Config from 'src/config'
 import { Article, get_article_id, get_article_link } from '../article_util';
+import * as utils from 'src/article_util'
 import { LiuliData, LiuliResponse } from 'src/liuli'
 
 const config = new Config()
@@ -89,39 +90,50 @@ export default Vue.extend({
       } as Article,
       iframe_src: '',
       page: 1,
-      head: 0,
+      head: -1,
       action_disabled: true,
     }
   },
   methods: {
     switch_current(index: number):void{
+      if (this.head === index) return
       this.head = index
       this.article = this.articles[index]
       this.article.id = this.get_article_id(this.article.link)
       this.iframe_src = this.get_article_link(this.article.link)
     },
-    apply_data(data: LiuliData): void {
-      if (this.action_disabled) {
+    apply_data(data: LiuliData, replace?: boolean): void {
+      console.log(replace)
+      if (typeof(replace) === 'boolean' && replace) {
         this.articles = data.articles as Article[]
-        this.action_disabled = false
-        this.switch_current(0)
       } else {
         this.articles = this.articles.concat(data.articles as Article[])
       }
+      this.action_disabled = false
+      this.switch_current(this.head === -1 ? 0 : this.head)
     },
-    load_more():void{
+    load_more(replace?: boolean):void{
       fetch(`${config.cdn_addr}/liuli/articles?page=${this.page++}`)
       .then((resp)=>resp.json())
       .then((json: LiuliResponse)=> {
-        this.apply_data(json.data as LiuliData)
-        return ''
+        this.apply_data(json.data as LiuliData, replace)
+        if (this.page === 2) {
+          utils.save_liuli_data(json.data as LiuliData)
+        }
       })
+    },
+    update_cache():void {
+      var data = utils.load_liuli_data()
+      if (data) {
+        this.apply_data(data)
+      }
+      this.load_more(true)
     },
     get_article_id,
     get_article_link,
   },
   mounted() {
-    this.$on('update_cache', this.load_more)
+    this.$on('update_cache', this.update_cache)
   },
   components: {
     'magnet-box': MagnetBox,

@@ -1,4 +1,5 @@
 import Config from 'src/config'
+import { LiuliData } from './liuli';
 
 const config = new Config()
 
@@ -20,4 +21,23 @@ function get_article_link(link: string): string {
   return id ? `${config.cdn_addr}/liuli/content?id=${id}` : ''
 }
 
-export {get_article_id, get_article_link, Article}
+function save_liuli_data(data: LiuliData): void {
+  localStorage.setItem('liuli_data', JSON.stringify(data))
+}
+
+function load_liuli_data(): LiuliData|null {
+  var json = localStorage.getItem('liuli_data')
+  if (json) {
+    return JSON.parse(json) as LiuliData
+  } else {
+    return null
+  }
+}
+
+export {
+  get_article_id,
+  get_article_link,
+  Article,
+  save_liuli_data,
+  load_liuli_data,
+}
