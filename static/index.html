@@ -3,54 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1280, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>LiuliReader</title>
 </head>
 <body>
-<div id="app" class="container-fluid">
-  <div class="row">
-    <!-- Main nav bar -->
-    <div class="col-sm-4 hacg-block">
-      <div class="list-group">
-        <a href="javascript:;" class="list-group-item list-group-item-action" :class="{ active: head === key }" @click="item_click" v-for="(item, key) of articles">{{item.title}}</a>
-        <a href="javascript:;" class="list-group-item list-group-item-action" @click="load_more">More...</a>
-      </div>
-    </div>
-    <!-- End -->
-
-    <!-- Article area -->
-    <div class="col-sm-8 hacg-block">
-      <div class="card">
-        <img :src="article.img" class="card-img-top">
-        <div class="card-body">
-          <h4 class="card-title">{{article.title}}</h4>
-          <p class="card-text">{{article.description}}</p>
-          <button :disabled="action_disabled" class="btn btn-info" data-toggle="modal" data-target="#magnet">获取磁力链接</button>
-          <button :disabled="action_disabled" class="btn btn-primary right" data-toggle="modal" data-target="#article">进入文章页面</button>
-        </div>
-      </div>
-    </div>
-    <!-- End -->
-
-    <!-- Article explorer -->
-    <div class="modal fade" id="article">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-body">
-            <iframe :src="iframe_src" frameborder="0"></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End -->
-
-    <div id="information_wrap">
-      <!-- Magnet link selector -->
-      <magnet-box :cid="article.id"></magnet-box>
-      <!-- End -->
-    </div>
-  </div>
-</div>
+<div id="app"></div>
 <script src="../dist/index.bundle.js"></script>
 </body>
 </html>

@@ -12,11 +12,12 @@ interface Article {
 
 function get_article_id(link: string): string {
   let regexp = /wp\/([0-9]*)\.html/
-  return regexp.exec(link)![1]
+  return regexp.test(link) ? regexp.exec(link)![1] : ''
 }
 
 function get_article_link(link: string): string {
-  return `${config.cdn_addr}/liuli/content?id=${get_article_id(link)}`;
+  var id = get_article_id(link)
+  return id ? `${config.cdn_addr}/liuli/content?id=${id}` : ''
 }
 
 export {get_article_id, get_article_link, Article}
