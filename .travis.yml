@@ -1,6 +1,4 @@
 language: node_js
-os: osx
-osx_image: xcode10.2
 sudo: required
 node_js:
   - "12"
@@ -20,10 +18,16 @@ stages:
 jobs:
   include:
     - stage: compile
+      os: linux
+      dist: trusty
       script: npm run pack-pro
     - stage: test
+      os: linux
+      dist: trusty
       script: npm run pack-pro && npm run unit
     - stage: deploy
+      os: osx
+      osx_image: xcode10.2
       script: npm run dist
 
 deploy:
