@@ -1,11 +1,15 @@
 language: node_js
 os: osx
 osx_image: xcode10.2
+sudo: required
 node_js:
   - "12"
 
+before_install:
+  - stty cols 80
+
 install:
-  - npm install
+  - npm ci
 
 stages:
   - compile
