@@ -7,8 +7,20 @@ node_js:
 install:
   - npm install
 
-script:
-  - npm run dist
+stages:
+  - compile
+  - test
+  - name: deploy
+    if: branch = master
+
+jobs:
+  include:
+    - stage: compile
+      script: npm run pack-pro
+    - stage: test
+      script: npm run pack-pro && npm run unit
+    - stage: deploy
+      script: npm run dist
 
 deploy:
   provider: releases

@@ -39,6 +39,7 @@
     "unit": "testcafe \"electron:.\" ./test/index.test.js",
     "dist": "npx webpack --config webpack.prod.js && electron-builder -mw",
     "pack": "npx webpack --config webpack.dev.js",
+    "pack-pro": "npx webpack --config webpack.prod.js",
     "watch": "npx webpack --config webpack.dev.js --watch"
   },
   "devDependencies": {
