@@ -36,6 +36,7 @@
   "scripts": {
     "test": "electron . --debug",
     "start": "electron .",
+    "unit": "testcafe \"electron:.\" ./test/index.test.js",
     "dist": "npx webpack --config webpack.prod.js && electron-builder -mw",
     "pack": "npx webpack --config webpack.dev.js",
     "watch": "npx webpack --config webpack.dev.js --watch"
@@ -52,6 +53,8 @@
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "style-loader": "^0.23.1",
+    "testcafe": "^1.2.1",
+    "testcafe-browser-provider-electron": "0.0.10",
     "ts-loader": "^6.0.2",
     "typescript": "^3.5.1",
     "vue": "^2.6.10",
