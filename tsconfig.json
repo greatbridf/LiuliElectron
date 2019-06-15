@@ -11,5 +11,10 @@
     "paths": {
       "src": ["./src"],
     },
-  }
+  },
+  "exclude": [
+    "test/*",
+    "webpack*",
+    "dist/*"
+  ]
 }
